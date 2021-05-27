@@ -3,6 +3,7 @@ package br.com.liferay.controllers;
 import br.com.liferay.dto.ResponseProducts;
 import br.com.liferay.models.Product;
 import br.com.liferay.services.ProductService;
+import br.com.liferay.services.exceptions.ProjectException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,11 +21,9 @@ public class ProductController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public void createListOfProducts(@RequestBody List<Product> products) {
-
         ResponseProducts response = productService
             .createProducts(products)
-            .orElseThrow(() -> new RuntimeException("Não foi possivel adicionar os produtos"));
-
+            .orElseThrow(() -> new ProjectException("Não foi possivel adicionar os produtos"));
     }
 
     @GetMapping
@@ -33,8 +32,5 @@ public class ProductController {
         List<Product> products = this.productService.returnAll(order);
 
         return ResponseEntity.ok(products);
-
     }
-
-
 }

@@ -2,6 +2,7 @@ package br.com.liferay.controllers;
 
 import br.com.liferay.models.ProductOrder;
 import br.com.liferay.services.ProductService;
+import br.com.liferay.services.exceptions.ProjectException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +20,7 @@ public class ProductOrderController {
     public ResponseEntity<ProductOrder> getAll(@PathVariable("id") Long order) {
 
         ProductOrder productOrder = this.productService.returnOrder(order)
-            .orElseThrow(() -> new RuntimeException("Order id invalid!"));
+            .orElseThrow(() -> new ProjectException("Order id invalid!"));
 
         return ResponseEntity.ok(productOrder);
     }
