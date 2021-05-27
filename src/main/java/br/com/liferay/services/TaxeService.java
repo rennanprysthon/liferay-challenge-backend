@@ -2,13 +2,14 @@ package br.com.liferay.services;
 
 import br.com.liferay.models.Product;
 import br.com.liferay.models.enums.ProductType;
+import org.springframework.stereotype.Service;
+
 import java.math.BigDecimal;
-import java.math.MathContext;
 import java.math.RoundingMode;
 import java.util.Arrays;
 import java.util.List;
 
-
+@Service
 public class TaxeService {
     public BigDecimal applyTaxes(List<Product> products) {
         BigDecimal total = BigDecimal.ZERO;
@@ -54,7 +55,7 @@ public class TaxeService {
         if (product.isImported()){
             totalPercent = totalPercent.add(new BigDecimal("0.05"));
         }
-        if (product.getProductType().equals(ProductType.OTHER)){
+        if (product.getType().equals(ProductType.OTHER)){
             totalPercent = totalPercent.add(new BigDecimal("0.10"));
         }
 

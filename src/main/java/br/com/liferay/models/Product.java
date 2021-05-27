@@ -2,20 +2,33 @@ package br.com.liferay.models;
 
 import br.com.liferay.models.enums.ProductType;
 
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
+@Entity
+@Table(name = "product")
 public class Product {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "product_id")
     private Long id;
     private String name;
-    private boolean isImported;
-    private String productType;
+    private boolean imported;
+    private String type;
     private BigDecimal price;
+    @ManyToOne
+    @JoinColumn(name = "cd_product_order")
+    private ProductOrder order;
+
+    public Product() {
+
+    }
 
     public Product(String name, boolean isImported, ProductType productType, BigDecimal price) {
         this.name = name;
-        this.isImported = isImported;
-        this.productType = productType.getType();
+        this.imported = isImported;
+        this.type = productType.getType();
         this.price = price;
     }
 
@@ -32,19 +45,11 @@ public class Product {
     }
 
     public boolean isImported() {
-        return isImported;
+        return imported;
     }
 
     public void setImported(boolean imported) {
-        isImported = imported;
-    }
-
-    public ProductType getProductType() {
-        return ProductType.returnProductType(this.productType);
-    }
-
-    public void setProductType(ProductType productType) {
-        this.productType = productType.getType();
+        imported = imported;
     }
 
     public BigDecimal getPrice() {
@@ -55,4 +60,19 @@ public class Product {
         this.price = price;
     }
 
+    public void setOrder(ProductOrder order) {
+        this.order = order;
+    }
+
+    public ProductType getType() {
+        return ProductType.returnProductType(this.type);
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public void setType(ProductType productType) {
+        this.type = productType.getType();
+    }
 }
