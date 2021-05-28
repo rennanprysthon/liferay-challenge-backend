@@ -13,6 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "/product")
+@CrossOrigin("*")
 public class ProductController {
 
     @Autowired
@@ -20,10 +21,12 @@ public class ProductController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void createListOfProducts(@RequestBody List<Product> products) {
+    public ResponseEntity<ResponseProducts> createListOfProducts(@RequestBody List<Product> products) {
         ResponseProducts response = productService
             .createProducts(products)
             .orElseThrow(() -> new ProjectException("Não foi possivel adicionar os produtos"));
+
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping

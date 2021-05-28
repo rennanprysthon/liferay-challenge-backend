@@ -56,6 +56,10 @@ public class ProductService {
         return this.productRepository.findAll();
     }
 
+    public List<ProductOrder> returnAllOrders() {
+        return this.productOrderRepository.findAll();
+    }
+
     public Optional<ProductOrder> returnOrder(Long order) {
         return productOrderRepository.findById(order);
     }
