@@ -9,5 +9,4 @@ public class LiferayApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(LiferayApplication.class, args);
 	}
-
 }

@@ -1,10 +1,8 @@
 package br.com.liferay.models;
 
 import br.com.liferay.models.enums.ProductType;
-
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 
 @Entity
 @Table(name = "product")
@@ -14,7 +12,7 @@ public class Product {
     @Column(name = "product_id")
     private Long id;
     private String name;
-    private boolean imported;
+    private Boolean imported;
     private String type;
     private BigDecimal price;
     @ManyToOne
@@ -22,7 +20,6 @@ public class Product {
     private ProductOrder order;
 
     public Product() {
-
     }
 
     public Product(String name, boolean isImported, ProductType productType, BigDecimal price) {
@@ -49,7 +46,7 @@ public class Product {
     }
 
     public void setImported(boolean imported) {
-        imported = imported;
+        this.imported = imported;
     }
 
     public BigDecimal getPrice() {
@@ -74,5 +71,17 @@ public class Product {
 
     public void setType(ProductType productType) {
         this.type = productType.getType();
+    }
+
+    @Override
+    public String toString() {
+        return "Product{" +
+            "id=" + id +
+            ", name='" + name + '\'' +
+            ", imported=" + imported +
+            ", type='" + type + '\'' +
+            ", price=" + price +
+            ", order=" + order +
+            '}';
     }
 }
