@@ -20,3 +20,7 @@ Open [http'://lo'calhost:8080](http://localhost:8080) to view it in the browser.
 
 Builds the app for production to the `target` folder.\
 The project will be on a .jar file
+
+## Front
+
+You can access the [Front Project](https://github.com/RennanPrysthon/liferay-challenge-frontend)
