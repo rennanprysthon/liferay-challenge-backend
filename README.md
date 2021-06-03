@@ -14,7 +14,7 @@ Download all depencencies and run all tests
 ### `mvn spring-boot:run`
 
 Start the project on dev mode.
-Open [http'://lo'calhost:8080](http://localhost:8080) to view it in the browser.
+Open [http'://localhost:8080](http://localhost:8080) to view it in the browser.
 
 ### `mvn clean package`
 

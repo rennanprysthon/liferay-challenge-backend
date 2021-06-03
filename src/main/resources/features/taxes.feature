@@ -7,14 +7,7 @@ Feature: calculate percent of a product
     Examples:
       | type | value | imported | expected |
       |  BO  | 12.49 |  false   | 12.49    |
-      |  OT  | 14.99 |  false   | 16.49    |
-      |  FO  | 0.85  |  false   | 0.85     |
-      |  FO  | 10.00 |  true    | 10.50    |
-      |  OT  | 47.50 |  true    | 54.65    |
-      |  OT  | 27.99 |  true    | 32.19    |
-      |  OT  | 18.99 |  false   | 20.89    |
-      |  ME  | 9.75  |  false   | 9.75     |
-      |  FO  | 11.25 |  true    | 11.85    |
+      |  MU  | 10.0  |  true    | 12.00    |
 
   Scenario: when given values should calculate their percentual
     Given multiply

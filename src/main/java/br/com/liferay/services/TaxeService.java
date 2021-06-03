@@ -1,16 +1,34 @@
 package br.com.liferay.services;
 
 import br.com.liferay.models.Product;
-import br.com.liferay.models.enums.ProductType;
+import br.com.liferay.services.sales.ImportedSalesImp;
+import br.com.liferay.services.sales.MusicSalesImp;
+import br.com.liferay.services.sales.OtherSalesImp;
+import br.com.liferay.services.sales.SalesInterface;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class TaxeService {
+
+    @Autowired
+    List<SalesInterface> sales;
+
+    @Bean
+    public List<SalesInterface> sales() {
+        return Arrays.asList(
+            new ImportedSalesImp(),
+            new MusicSalesImp(),
+            new OtherSalesImp()
+        );
+    }
+
     public BigDecimal applyTaxes(List<Product> products) {
         BigDecimal total = BigDecimal.ZERO;
         BigDecimal taxes;
@@ -36,7 +54,7 @@ public class TaxeService {
         return newPrice;
     }
 
-    private BigDecimal round(BigDecimal newPrice) {
+    BigDecimal round(BigDecimal newPrice) {
         double value = newPrice.doubleValue();
         String price = newPrice.toString();
         String lastValue = price.substring(price.length() - 1);
@@ -51,14 +69,17 @@ public class TaxeService {
 
 
     private BigDecimal returnTaxePercent(Product product) {
-        BigDecimal totalPercent = BigDecimal.ZERO;
-        if (product.isImported()){
-            totalPercent = totalPercent.add(new BigDecimal("0.05"));
-        }
-        if (product.getType().equals(ProductType.OTHER)){
-            totalPercent = totalPercent.add(new BigDecimal("0.10"));
+        BigDecimal result = BigDecimal.ZERO;
+
+        List<BigDecimal> totalPercent = sales
+            .stream()
+            .map(p ->  p.apply(product))
+            .collect(Collectors.toList());
+
+        for (BigDecimal bigDecimal : totalPercent) {
+            result = result.add(bigDecimal);
         }
 
-        return totalPercent;
+        return result;
     }
 }

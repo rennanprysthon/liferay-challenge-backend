@@ -20,4 +20,14 @@ public class TaxeServiceTest {
         taxeService.applyTaxes(Collections.singletonList(book));
         assertEquals(new BigDecimal("11.85"), book.getPrice());
     }
+
+    @Test
+    public void shouldRoundUp() {
+        BigDecimal bigDecimal = new BigDecimal("0.12");
+        BigDecimal excpected = new BigDecimal("0.15");
+        BigDecimal result = BigDecimal.ZERO;
+        result = taxeService.round(bigDecimal);
+
+        assertEquals(excpected, result);
+    }
 }

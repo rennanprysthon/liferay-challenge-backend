@@ -4,6 +4,7 @@ public enum ProductType {
     BOOK("BO"),
     FOOD("FO"),
     MEDICAL("ME"),
+    MUSIC("MU"),
     OTHER("OT");
 
     private String type;
