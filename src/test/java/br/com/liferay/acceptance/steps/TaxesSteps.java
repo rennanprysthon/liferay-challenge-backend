@@ -3,6 +3,9 @@ package br.com.liferay.acceptance.steps;
 import br.com.liferay.models.Product;
 import br.com.liferay.models.enums.ProductType;
 import br.com.liferay.services.TaxeService;
+import br.com.liferay.services.sales.ImportedSalesImp;
+import br.com.liferay.services.sales.MusicSalesImp;
+import br.com.liferay.services.sales.OtherSalesImp;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -22,7 +25,12 @@ public class TaxesSteps {
 
     @Before
     public void setUpService() {
-        this.taxeService = new TaxeService();
+        this.taxeService = new TaxeService(Arrays.asList(
+                new ImportedSalesImp(),
+                new MusicSalesImp(),
+                new OtherSalesImp()
+            )
+        );
     }
 
     List<Product> productList = new ArrayList<>();

@@ -20,13 +20,8 @@ public class TaxeService {
     @Autowired
     List<SalesInterface> sales;
 
-    @Bean
-    public List<SalesInterface> sales() {
-        return Arrays.asList(
-            new ImportedSalesImp(),
-            new MusicSalesImp(),
-            new OtherSalesImp()
-        );
+    public TaxeService(List<SalesInterface> sales) {
+        this.sales = sales;
     }
 
     public BigDecimal applyTaxes(List<Product> products) {
@@ -46,8 +41,9 @@ public class TaxeService {
         BigDecimal productPrice = product.getPrice();
         BigDecimal percent = returnTaxePercent(product);
         BigDecimal newPrice = productPrice.multiply(percent).setScale(2, RoundingMode.HALF_UP);
+        newPrice = round(newPrice);
 
-        productPrice = productPrice.add(round(newPrice));
+        productPrice = productPrice.add(newPrice);
 
         product.setPrice(productPrice.setScale(2, RoundingMode.HALF_UP));
 

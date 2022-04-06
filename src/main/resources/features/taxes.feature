@@ -17,3 +17,9 @@ Feature: calculate percent of a product
       | chocolate | FO   | 0.85    | false    |
     When calculate all values
     Then sales taxes should be <'1.50'> and total value should be <'29.83'>
+  Scenario: when given values at 10.2 should return correctly
+    Given multiply
+      | name      | type | value   | imported |
+      | book      | BO   | 10.20   | true    |
+    When calculate all values
+    Then sales taxes should be <'0.55'> and total value should be <'10.75'>
